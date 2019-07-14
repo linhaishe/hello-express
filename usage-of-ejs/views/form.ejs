@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
+    <!--引用共用模版，最好加文件后缀以防模版找不到文件-->
+        <%- include('partials/header.ejs') -%>
     <h1>
-        <%= person %>
+        <%= data.age %>
+        <h2>hobbies</h2>
+        <ul>
+            <% data.hobbie.forEach(function(item){ %>
+                <li>
+                    <%= item %>
+                </li>
+            <% }) %>
+        </ul>
+
     </h1>
     <form action="/upload" method="post" enctype="multipart/form-data">
         <h2>单图上传</h2>
@@ -16,4 +29,5 @@
         <input type="submit" value="提交">
     </form>
 </body>
+
 </html>
