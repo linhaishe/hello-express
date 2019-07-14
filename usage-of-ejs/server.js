@@ -5,6 +5,8 @@ var multer = require('multer');
 //var upload = multer({ dest: 'uploads/' });
 
 var app = express();
+//默认将ejs文件放在同级目录views下，你也可以改名字，但是一般不建议
+//'ejs'指的是使用的模板模块名称，其他的还有'pug'等等，官方文档可查
 app.set('view engine', 'ejs');
 
 
