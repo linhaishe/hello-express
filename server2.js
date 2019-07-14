@@ -20,6 +20,13 @@ app.get('/profile/:id/user/:name',function(req,res){
 //可以读取出ID的值，路由的参数是动态的，冒号的表示是动态的
 //localhost:3000/profile/1/user/hd0300
 
+//正则表达式
+app.get('/ab?cd',function(req,res){
+    res.send('/ab?cd');
+})
+//问号前面的字符可以出现一次或者不出现，b出现0次或者1次
+//localhost:3000/abbcd 则不能成功
+
 //查询字符串，使用get请求时，它带有一个参数在地址栏当中，如何获取此参数
 app.get('/',function(req,res){
     console.dir(req.query);
