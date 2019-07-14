@@ -18,8 +18,13 @@ app.get('/', function (req, res) {
 });
 
 app.get('/form', function (req, res) {
-    var form = fs.readFileSync('./form.html', { encoding: "utf8" });
-    res.send(form);
+    // var form = fs.readFileSync('./form.html', { encoding: "utf8" });
+    // res.send(form);
+    //以上等同于res.sendFile(__dirname+'/form.html');
+    var person = req.params.name;
+    res.sendFile(__dirname+'/form.html');
+    //传递动态的数据，比如变量，比如将person传递到html文件中，则需要用到模版引擎，将变量数据通过模板引擎放入html文件中，可以嵌入动态的数据
+    //ejs模板引擎
 });
 
 app.post('/', urlencodedParser, function (req, res) {
