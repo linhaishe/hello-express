@@ -1,3 +1,7 @@
+//知识点：1.req.send()获取动态路由参数
+//2.get post 请求时，如何获取动态路由参数
+//3.post请求 表单的上传，不同的数据类型，处理的方法不一样
+
 //导入模块
 var express = require('express');
 
@@ -13,9 +17,10 @@ app.get('/profile/:id/user/:name', function (req, res) {
     //输出动态参数
     //output {id:'1',name:'hd0300'}
     res.send("you requested to see a profile with the name of " + req.params.name);
-    //请求name的参数
+    //请求name的参数,name参数是动态的，即在地址栏中填写任何数值都能被读取
 });
-//output you requested to see a profile with the name of hd0300
+
+//output 'you requested to see a profile with the name of hd0300'
 //可以读取出ID的值，路由的参数是动态的，冒号的表示是动态的
 //localhost:3000/profile/1/user/hd0300
 
