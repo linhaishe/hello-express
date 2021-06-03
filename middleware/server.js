@@ -1,6 +1,8 @@
 var express = require("express");
 const { response } = require("express");
 var app = express();
+var bodyParser = require("body-parser");
+var mysql = require("mysql");
 
 //安装favicon
 //npm install serve-favicon
@@ -10,7 +12,14 @@ var favicon = require("serve-favicon");
 //npm install --save path
 // var path = require("path");
 
+//网页图标使用
 app.use(favicon("./public/favicon.ico"));
+
+//body-parser
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
 
 app.use(express.static("public"));
 //响应静态文件,静态文件放在public文件中
@@ -45,13 +54,47 @@ app.use(express.static("public"));
 // });
 //function函数是一个中间件函数，只是运行完之后并没有用到next将结果传递给下一个中间件，所以会直接结束。
 
+var connection = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "root",
+  database: "dormProject",
+});
+
+// connection.connect();
+
+// connection.query("SELECT 1 + 1 AS solution", function (error, results, fields) {
+//   if (error) throw error;
+//   console.log("The solution is: ", results[0].solution);
+// });
+
+// connection.end();
+
 app.get("/login", function (req, res) {
   console.log("someone login", req.query);
-  if (req.query.username == "aaa" && req.query.password == "111") {
-    res.json({ error: 0, msg: "登入成功" });
-  } else {
-    res.json({ error: 1, msg: "登入失败" });
-  }
+  // if (req.query.username == "aaa" && req.query.password == "111") {
+  //   res.json({ error: 0, msg: "登入成功" });
+  // } else {
+  //   res.json({ error: 1, msg: "登入失败" });
+  // }
+  var sql =
+    "select * from admin where username='" +
+    req.query.username +
+    "' and pwd ='" +
+    req.query.password +
+    "'";
+  console.log(sql);
+  connection.query(sql, function (err, data) {
+    console.log(err, data);
+    //数据库返回的数据在data里
+    if (!err) {
+      if (data.length) {
+        res.json({ error: 0, msg: "登入成功" });
+      } else {
+        res.json({ error: 1, msg: "登入失败" });
+      }
+    }
+  });
 });
 
 app.listen(3000);
