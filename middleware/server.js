@@ -97,6 +97,124 @@ app.get("/login", function (req, res) {
   });
 });
 
+app.post("/signin", function (req, res) {
+  console.log("有人注册", req.body);
+  // var sql =
+  //   "select * from admin where username='" +
+  //   req.body.username +
+  //   "' and pwd ='" +
+  //   req.body.password +
+  //   "'";
+
+  var insertSql =
+    'insert into admin values (null,"' +
+    req.body.account +
+    '","' +
+    req.body.password +
+    '",1,"' +
+    req.body.username +
+    '")';
+  console.log("insertSql", insertSql);
+  //数据查询
+  // connection.query(sql, function (err, data) {
+  //   console.log(err, data);
+  //   //数据库返回的数据在data里
+  //   if (!err) {
+  //     if (data.length) {
+  //       res.json({ error: 0, msg: "查询成功" });
+  //     } else {
+  //       res.json({ error: 1, msg: "查询失败" });
+  //     }
+  //   }
+  // });
+
+  //用户数据添加
+  connection.query(insertSql, function (err, data) {
+    console.log(err, data);
+    //数据库返回的数据在data里
+    if (!err) {
+      res.json({ error: 0, msg: "注册成功", data: { id: data.insertId } });
+    } else {
+      res.json({ error: 1, msg: err });
+    }
+  });
+});
+
+app.post("/signin1", function (req, res) {
+  console.log("有人注册", req.body);
+  // var sql =
+  //   "select * from admin where username='" +
+  //   req.body.username +
+  //   "' and pwd ='" +
+  //   req.body.password +
+  //   "'";
+
+  var insertSql =
+    'insert into admin values (null,"' +
+    req.body.account +
+    '","' +
+    req.body.password +
+    '",1,"' +
+    req.body.username +
+    '")';
+  console.log("insertSql", insertSql);
+  //数据查询
+  // connection.query(sql, function (err, data) {
+  //   console.log(err, data);
+  //   //数据库返回的数据在data里
+  //   if (!err) {
+  //     if (data.length) {
+  //       res.json({ error: 0, msg: "查询成功" });
+  //     } else {
+  //       res.json({ error: 1, msg: "查询失败" });
+  //     }
+  //   }
+  // });
+
+  //用户数据添加
+  connection.query(insertSql, function (err, data) {
+    console.log(err, data);
+    //数据库返回的数据在data里
+    if (!err) {
+      res.json({ error: 0, msg: "注册成功", data: { id: data.insertId } });
+    } else {
+      res.json({ error: 1, msg: err });
+    }
+  });
+});
+
+//查询
+app.get("/get", function (req, res) {
+  var sql = "select * from admin";
+  connection.query(sql, function (err, data) {
+    if (err) {
+      res.json({ error: 1, msg: err });
+    } else {
+      console.log("请求数据库用户");
+      res.json({ error: 0, data: data });
+    }
+  });
+});
+
+app.get("/ajaxtest", function (req, res) {
+  //传输数据给前端，使用res.json的方式
+  res.json({ testConten: "小小" });
+});
+
+//删除
+app.post("/del", function (req, res) {
+  console.log("req.body", req.body);
+  var sql = "delete from admin where adminId=" + req.body.id;
+
+  connection.query(sql, function (err, data) {
+    if (err) {
+      res.json({ error: 1, msg: err });
+    } else {
+      res.json({ error: 0, msg: "删除成功" });
+    }
+  });
+});
+
 app.listen(3000);
 console.log("listening to port 3000");
 //localhost:3000
