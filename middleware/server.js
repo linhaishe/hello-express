@@ -6,7 +6,7 @@ var mysql = require("mysql");
 
 //安装favicon
 //npm install serve-favicon
-var express = require("express");
+//var express = require("express");
 var favicon = require("serve-favicon");
 
 //npm install --save path
