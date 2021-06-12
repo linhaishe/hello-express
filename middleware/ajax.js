@@ -1,4 +1,5 @@
 //原生ajax封装，类$.ajax
+
 function json2url(json) {
   var arr = [];
   for (var name in json) {

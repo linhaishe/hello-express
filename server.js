@@ -1,3 +1,5 @@
+//此文件主要内容讲述get,post请求的使用和动态路径值的获取
+
 //导入模块
 var express = require("express");
 
