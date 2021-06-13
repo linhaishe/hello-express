@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 多文件上传 -->
+    <input type="file" multiple />
+    <button>提交</button>
+  </body>
+</html>
+<script src="jquery-3.6.0.min.js"></script>
+<script>
+  var oBtn = document.querySelector("button");
+  var oFile = document.querySelector("input");
+
+  //原生ajax
+  oBtn.onclick = function () {
+    //通过files的属性获得文件的内容
+    console.log(oFile.files[0]);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("post", "/upload", true);
+    //以前的内容传输是xhr.send('a=1&b=2');
+    //文件的传输形式是formdata形式，所以必须new FormData();装数据用的
+    var formData = new FormData();
+    //多文件上传
+    for (var i = 0; i < oFile.files.length; i++) {
+      //传输文件的名字，就是input框中name的属性，必须和前端一致接口一直，upload.array("logo", 2)，这部分要一致。
+      formData.append("file", oFile.files[i]);
+    }
+    xhr.send(formData);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) {
+        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+          console.log(xhr.responseText);
+        }
+      }
+    };
+  };
+
+  // jq
+  $("button").click(function () {
+    var formData = new FormData();
+    for (var i = 0; i < $("input")[0].files.length; i++) {
+      formData.append("file", $("input")[0].files[i]);
+    }
+    $.ajax({
+      url: "/upload",
+      type: "post",
+      data: formData,
+      //请求头的格式，不设置为默认的www-url解析格式
+      contentType: false,
+      processData: false,
+      success: function (res) {
+        console.log(res);
+      },
+    });
+  });
+</script>

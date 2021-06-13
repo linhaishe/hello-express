@@ -59,11 +59,18 @@ app.post("/", urlencodedParser, function (req, res) {
 //upload.single("logo")
 app.post("/upload", upload.array("logo", 2), function (req, res) {
   //logo是html文件的input的name,因为它要知道哪个文件的标签
-  console.log(req.file);
-  res.send({ ret_code: 0 });
+  //单个文件的时候从req.file获取文件内容
+  //多个文件的时候从req.files获取文件内容
+  // console.log(req.files);
+  console.log(req.files);
+
+  if (req.files) {
+    // res.send({ ret_code: 0 });
+    res.json({ error: 0, file: req.files.filename });
+  }
 });
 
-app.set("view engine", "ejs");
-app.use(express.static("./public"));
+// app.set("view engine", "ejs");
+// app.use(express.static("./public"));
 app.listen(3000);
 console.log("You are listening to port 3000");
