@@ -61,9 +61,12 @@ myRouter.get("/login", function (req, res) {
   console.log("数据数据", req.session);
   obj = req.session;
   obj.user = userInfo;
-  console.log("objobj", obj);
-
-  if (obj.username == userInfo.name && obj.password == userInfo.pwd) {
+  console.log("objusername", obj.user.name);
+  console.log(req.query);
+  if (
+    obj.user.name == req.query.username &&
+    obj.user.pwd == req.query.password
+  ) {
     console.log("req.session", req.session);
     //   obj.user = JSON.stringify(userInfo);
     res.json({ error: 0, msg: "登录成功" });

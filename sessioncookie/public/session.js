@@ -8,12 +8,14 @@ $("#btn").click(function () {
     success: function (res) {
       //json解析后台返回的数据
       var json = res;
-      // console.log("jsonjsonjson", json);
-      if (json.error == 2) {
-        window.location.href = "/login.html";
+      console.log("jsonjsonjson", json);
+      if (json.error == 1) {
+        window.location.href = "./index.html";
+        console.log("失败");
+      } else {
+        window.location.href = "./user.html";
+        console.log("登入成功");
       }
-      document.write("登入成功");
-      console.log("成功啊啊啊啊啊");
     },
   });
 });
