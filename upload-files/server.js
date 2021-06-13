@@ -56,8 +56,8 @@ app.post("/", urlencodedParser, function (req, res) {
   console.dir(req.body);
   res.send(req.body.name);
 });
-
-app.post("/upload", upload.single("logo"), function (req, res) {
+//upload.single("logo")
+app.post("/upload", upload.array("logo", 2), function (req, res) {
   //logo是html文件的input的name,因为它要知道哪个文件的标签
   console.log(req.file);
   res.send({ ret_code: 0 });
