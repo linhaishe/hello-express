@@ -8,6 +8,7 @@ $("#btn").click(function () {
     success: function (res) {
       //json解析后台返回的数据
       var json = res;
+      // var json2 = JSON.parse(res);
       console.log("jsonjsonjson", json);
       if (json.error == 1) {
         window.location.href = "./index.html";
