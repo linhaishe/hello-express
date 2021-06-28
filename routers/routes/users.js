@@ -1,10 +1,10 @@
-var express = require('express');
+var express = require("express");
 
 //router()方法
 var router = express.Router();
 
-router.get('/', function (req, res, next) {
-    res.send('users');
+router.get("/users", function (req, res, next) {
+  res.send("users");
 });
 
 module.exports = router;
