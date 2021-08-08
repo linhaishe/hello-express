@@ -25,7 +25,7 @@ app.all("/server", (request, response) => {
   response.send("HELLO AJAX POST");
 });
 
-// //JSON 响应
+//JSON 响应
 app.all("/json-server", (request, response) => {
   //设置响应头  设置允许跨域
   response.setHeader("Access-Control-Allow-Origin", "*");
@@ -41,7 +41,7 @@ app.all("/json-server", (request, response) => {
   response.send(str);
 });
 
-// //针对 IE 缓存
+//针对 IE 缓存
 app.get("/ie", (request, response) => {
   //设置响应头  设置允许跨域
   response.setHeader("Access-Control-Allow-Origin", "*");
@@ -49,7 +49,7 @@ app.get("/ie", (request, response) => {
   response.send("HELLO IE - 5");
 });
 
-// //延时响应
+//延时响应
 app.all("/delay", (request, response) => {
   //设置响应头  设置允许跨域
   response.setHeader("Access-Control-Allow-Origin", "*");
@@ -57,88 +57,90 @@ app.all("/delay", (request, response) => {
   setTimeout(() => {
     //设置响应体
     response.send("延时响应");
-  }, 1000);
+  }, 3000);
 });
 
-// //jQuery 服务
-// app.all('/jquery-server', (request, response) => {
-//     //设置响应头  设置允许跨域
-//     response.setHeader('Access-Control-Allow-Origin', '*');
-//     response.setHeader('Access-Control-Allow-Headers', '*');
-//     // response.send('Hello jQuery AJAX');
-//     const data = {name:'尚硅谷'};
-//     response.send(JSON.stringify(data));
-// });
+//jQuery 服务
+app.all("/jquery-server", (request, response) => {
+  //设置响应头  设置允许跨域
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  response.setHeader("Access-Control-Allow-Headers", "*");
+  // response.send('Hello jQuery AJAX');
+  const data = { name: "尚硅谷" };
+  response.send(JSON.stringify(data));
+});
 
-// //axios 服务
-// app.all('/axios-server', (request, response) => {
-//     //设置响应头  设置允许跨域
-//     response.setHeader('Access-Control-Allow-Origin', '*');
-//     response.setHeader('Access-Control-Allow-Headers', '*');
-//     // response.send('Hello jQuery AJAX');
-//     const data = {name:'尚硅谷'};
-//     response.send(JSON.stringify(data));
-// });
+//axios 服务
+app.all("/axios-server", (request, response) => {
+  //设置响应头  设置允许跨域
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  response.setHeader("Access-Control-Allow-Headers", "*");
+  // response.send('Hello jQuery AJAX');
+  const data = { name: "尚硅谷" };
+  response.send(JSON.stringify(data));
+});
 
-// //fetch 服务
-// app.all('/fetch-server', (request, response) => {
-//     //设置响应头  设置允许跨域
-//     response.setHeader('Access-Control-Allow-Origin', '*');
-//     response.setHeader('Access-Control-Allow-Headers', '*');
-//     // response.send('Hello jQuery AJAX');
-//     const data = {name:'尚硅谷'};
-//     response.send(JSON.stringify(data));
-// });
+//fetch 服务
+app.all("/fetch-server", (request, response) => {
+  //设置响应头  设置允许跨域
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  response.setHeader("Access-Control-Allow-Headers", "*");
+  // response.send('Hello jQuery AJAX');
+  const data = { name: "尚硅谷" };
+  response.send(JSON.stringify(data));
+});
 
-// //jsonp服务
-// app.all('/jsonp-server',(request, response) => {
-//     // response.send('console.log("hello jsonp")');
-//     const data = {
-//         name: '尚硅谷atguigu'
-//     };
-//     //将数据转化为字符串
-//     let str = JSON.stringify(data);
-//     //返回结果
-//     response.end(`handle(${str})`);
-// });
+//jsonp服务
+app.all("/jsonp-server", (request, response) => {
+  // response.send('console.log("hello jsonp")');
+  const data = {
+    name: "尚硅谷atguigu",
+  };
+  //将数据转化为字符串
+  let str = JSON.stringify(data);
+  //返回结果
+  response.end(`handle(${str})`);
+});
 
-// //用户名检测是否存在
-// app.all('/check-username',(request, response) => {
-//     // response.send('console.log("hello jsonp")');
-//     const data = {
-//         exist: 1,
-//         msg: '用户名已经存在'
-//     };
-//     //将数据转化为字符串
-//     let str = JSON.stringify(data);
-//     //返回结果
-//     response.end(`handle(${str})`);
-// });
+//用户名检测是否存在
+app.all("/check-username", (request, response) => {
+  // response.send('console.log("hello jsonp")');
+  const data = {
+    exist: 1,
+    msg: "用户名已经存在",
+  };
+  //将数据转化为字符串
+  let str = JSON.stringify(data);
+  //返回结果
+  response.end(`handle(${str})`);
+});
 
-// //
-// app.all('/jquery-jsonp-server',(request, response) => {
-//     // response.send('console.log("hello jsonp")');
-//     const data = {
-//         name:'尚硅谷',
-//         city: ['北京','上海','深圳']
-//     };
-//     //将数据转化为字符串
-//     let str = JSON.stringify(data);
-//     //接收 callback 参数
-//     let cb = request.query.callback;
+//
+app.all("/jquery-jsonp-server", (request, response) => {
+  // response.send('console.log("hello jsonp")');
+  const data = {
+    name: "尚硅谷",
+    city: ["北京", "上海", "深圳"],
+  };
+  //将数据转化为字符串
+  let str = JSON.stringify(data);
+  //接收 callback 参数
+  let cb = request.query.callback;
 
-//     //返回结果
-//     response.end(`${cb}(${str})`);
-// });
+  //返回结果
+  response.end(`${cb}(${str})`);
+});
 
-// app.all('/cors-server', (request, response)=>{
-//     //设置响应头
-//     response.setHeader("Access-Control-Allow-Origin", "*");
-//     response.setHeader("Access-Control-Allow-Headers", '*');
-//     response.setHeader("Access-Control-Allow-Method", '*');
-//     // response.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
-//     response.send('hello CORS');
-// });
+app.all("/cors-server", (request, response) => {
+  //设置响应头
+  //星号是说明任何请求路径都可以被接受
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  response.setHeader("Access-Control-Allow-Headers", "*");
+  response.setHeader("Access-Control-Allow-Method", "*");
+  //写了固定路径之后就会只接受固定路径的请求，别的请求都会被拒绝
+  // response.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
+  response.send("hello CORS");
+});
 
 //4. 监听端口启动服务
 app.listen(8000, () => {

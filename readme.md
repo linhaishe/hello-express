@@ -257,3 +257,85 @@ app.all("/delay", (request, response) => {
         }
 
 ```
+
+#### 2. jquery-ajax
+
+```
+   $('button').eq(0).click(function(){
+            $.get('http://127.0.0.1:8000/jquery-server', {a:100, b:200}, function(data){
+                console.log(data);
+            },'json');
+        });
+```
+
+```
+app.all("/jquery-server", (request, response) => {
+  //设置响应头  设置允许跨域
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  response.setHeader("Access-Control-Allow-Headers", "*");
+  // response.send('Hello jQuery AJAX');
+  const data = { name: "尚硅谷" };
+  response.send(JSON.stringify(data));
+});
+```
+
+//如果后端传回的是一个 json 数据，请求中的第三个参数就写入'json'即可，自动转换 json 数据，否则就需要自己通过 json.parse()去解析。
+
+```
+   $('button').eq(2).click(function(){
+            $.ajax({
+                //url
+                url: 'http://127.0.0.1:8000/jquery-server',
+                //参数
+                data: {a:100, b:200},
+                //请求类型
+                type: 'GET',
+                //响应体结果
+                //如果后端传回的是一个 json 数据，请求中的第三个参数就写入'json'即可，自动转换 json 数据，否则就需要自己通过 json.parse()去解析。
+                dataType: 'json',
+                //成功的回调
+                success: function(data){
+                    console.log(data);
+                },
+                //超时时间
+                timeout: 2000,
+                //失败的回调
+                error: function(){
+                    console.log('出错啦!!');
+                },
+                //头信息
+                headers: {
+                    c:300,
+                    d:400
+                }
+            });
+        });
+
+
+```
+
+#### 3. axios-ajax
+
+查看 5-axios-ajax demo
+
+post 请求中，请求体发送的是 json 格式的字符串
+
+第二个参数自动作为 data 数据进行传输
+
+#### 4. axios-fetch
+
+查看 6-axios-fetch demo
+用的较少
+
+#### 5. 跨域
+
+##### 1. 同源策略
+
+```
+//这里因为是满足同源策略的, 所以 url 可以简写
+x.open("GET",'/data');
+```
+
+##### 2. jsonp
+
+##### 3. cors
