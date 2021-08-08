@@ -211,6 +211,11 @@ app.post("/del", function (req, res) {
   });
 });
 
+app.get("/ajaxtext", (request, response) => {
+  //设置响应
+  response.send("HELLO EXPRESS");
+});
+
 app.listen(3000);
 console.log("listening to port 3000");
 //localhost:3000
