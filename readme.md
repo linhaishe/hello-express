@@ -329,7 +329,15 @@ post 请求中，请求体发送的是 json 格式的字符串
 
 #### 5. 跨域
 
+如何解决跨域
+
+- JSONP
+- CORS
+
 ##### 1. 同源策略
+
+同源策略(Same-Origin Policy)最早由 Netscape 公司提出，是浏览器的一种安全策略。
+同源： 协议、域名、端口号 必须完全相同。 违背同源策略就是跨域。
 
 ```
 //这里因为是满足同源策略的, 所以 url 可以简写
@@ -338,4 +346,113 @@ x.open("GET",'/data');
 
 ##### 2. jsonp
 
+1. JSONP 是什么
+   JSONP(JSON with Padding)，是一个非官方的跨域解决方案，纯粹凭借程序员的聪明 才智开发出来，只支持 get 请求。
+2. JSONP 怎么工作的？
+   在网页有一些标签天生具有跨域能力，比如：img link iframe script。 JSONP 就是利用 script 标签的跨域能力来发送请求的。
+3. JSONP 的使用
+
+```
+//1.动态的创建一个 script 标签
+
+var script = document.createElement("script");
+
+//2.设置 script 的 src，设置回调函数
+
+script.src = "http://localhost:3000/testAJAX?callback=abc";
+function abc(data) { alert(data.name); };
+
+//3.将 script 添加到 body 中
+
+document.body.appendChild(script);
+
+//4.服务器中路由的处理
+
+router.get("/testAJAX" , function (req , res) {
+
+console.log("收到请求");
+var callback = req.query.callback;
+var obj = { name:"孙悟空", age:18 }
+res.send(callback+"("+JSON.stringify(obj)+")");
+
+});
+
+```
+
+4. jQuery 中的 JSONP
+
+```
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn">按钮</button>
+    <ul id="list"></ul>
+    <script type="text/javascript" src="./jquery-1.12.3.js"></script>
+    <script type="text/javascript">
+      window.onload = function () {
+        var btn = document.getElementById("btn");
+        btn.onclick = function () {
+          $.getJSON(
+            "http://api.douban.com/v2/movie/in_theaters?callback=?",
+            function (data) {
+              console.log(data); //获取所有的电影的条目 var subjects = data.subjects; //遍历电影条目
+              for (var i = 0; i < subjects.length; i++) {
+                $("#list").append(
+                  "<li>" +
+                    subjects[i].title +
+                    "<br />" +
+                    '<img src="' +
+                    subjects[i].images.large +
+                    '" >' +
+                    "</li>"
+                );
+              }
+            }
+          );
+        };
+      };
+    </script>
+  </body>
+</html>
+
+
+
+
+```
+
 ##### 3. cors
+
+link : https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS
+
+1. CORS 是什么？
+
+CORS（Cross-Origin Resource Sharing），跨域资源共享。CORS 是官方的跨域解决方案，它的特点是不需要在客户端做任何特殊的操作，完全在服务器中进行处理，支持 get 和 post 请求。跨域资源共享标准新增了一组 HTTP 首部字段，允许服务器声明哪些 源站通过浏览器有权限访问哪些资源
+
+2. CORS 怎么工作的？
+
+CORS 是通过设置一个响应头来告诉浏览器，该请求允许跨域，浏览器收到该响应 以后就会对响应放行。
+
+3. CORS 的使用
+
+```
+//主要是服务器端的设置：
+
+router.get("/testAJAX" , function (req , res) {
+
+//通过 res 来设置响应头，来允许跨域请求
+
+//res.set("Access-Control-Allow-Origin","http://127.0.0.1:3000");
+
+res.set("Access-Control-Allow-Origin","*");
+
+res.send("testAJAX 返回的响应");
+
+});
+
+```
