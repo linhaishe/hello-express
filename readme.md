@@ -44,6 +44,8 @@ app.get('/', (request, response)=>{
 
 ### ajaxDemo
 
+学习地址 ：https://www.bilibili.com/video/BV1WC4y1b78y?p=30
+
 1. 原生 ajax 请求，jquery-ajax 请求，axios-ajax 请求，fetch-ajax 请求的 demo 和笔记
 
 #### 1. 原生 ajax 请求
